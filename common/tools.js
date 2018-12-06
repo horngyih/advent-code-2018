@@ -39,9 +39,37 @@ function categorize( arr, catFn ){
     }, {} );
 }
 
+function values( obj ){
+    if( typeof obj === "object" ){
+        return Object.keys(obj).map(key=>obj[key]);
+    } else {
+        return obj;
+    }
+}
+
+function levenshtein( str1, str2 ){
+    if( str1.length === 0 ) return str2.length;
+    if( str2.length === 0 ) return str1.length;
+
+    let cost;
+
+    if( str1[str1.length-1] === str2[str2.length-1] )
+        cost = 0;
+    else
+        cost = 1;
+
+    return Math.min(
+        levenshtein(str1.substring(0, str1.length-1), str2 ) + 1,
+        levenshtein(str1, str2.substring(0, str2.length-1) ) + 1,
+        levenshtein(str1.substring(0, str1.length-1), str2.substring(0, str2.length-1) ) + cost
+    );
+}
+
 module.exports = {
     compose : compose,
     flatmap : flatmap,
     categorize : categorize,
-    sum : sum
+    sum : sum,
+    values : values,
+    levenshtein : levenshtein
 };
