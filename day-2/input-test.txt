@@ -1,0 +1,5 @@
+abcdef
+ababac
+abdcef
+aabcdd
+abcdee
